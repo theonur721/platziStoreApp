@@ -7,6 +7,7 @@ import CartScreen from '../screens/CartScreen';
 import FavoriteScreen from '../screens/FavoriteScreen';
 import {View, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {COLORS} from '../theme/colors';
 
 const Tab = createBottomTabNavigator();
 
@@ -17,8 +18,14 @@ const Tabrouter = () => {
         screenOptions={{
           headerShown: false, // Üst başlıkları kaldır
           tabBarStyle: {
-            backgroundColor: '#fff', // Eğer görünmüyorsa rengi belirgin yap
-            height: 80, // Sabit yükseklik ver
+            backgroundColor: COLORS.secondary,
+            height: 80,
+            paddingTop: 5,
+          },
+          tabBarActiveTintColor: COLORS.primary,
+          tabBarInactiveTintColor: COLORS.tertiary,
+          tabBarLabelStyle: {
+            fontSize: 12,
           },
         }}>
         <Tab.Screen
@@ -29,7 +36,7 @@ const Tabrouter = () => {
               <Icon
                 name={focused ? 'home' : 'home-outline'}
                 color={color}
-                size={size}
+                size={27}
               /> // Focus durumuna göre ikon değişiyor
             ),
           }}
@@ -42,7 +49,7 @@ const Tabrouter = () => {
               <Icon
                 name={focused ? 'search-circle' : 'search'}
                 color={color}
-                size={size}
+                size={27}
               /> // Focus durumuna göre ikon değişiyor
             ),
           }}
@@ -55,7 +62,7 @@ const Tabrouter = () => {
               <Icon
                 name={focused ? 'heart' : 'heart-outline'}
                 color={color}
-                size={size}
+                size={27}
               /> // Focus durumuna göre ikon değişiyor
             ),
           }}
@@ -68,7 +75,7 @@ const Tabrouter = () => {
               <Icon
                 name={focused ? 'cart' : 'cart-outline'}
                 color={color}
-                size={size}
+                size={27}
               /> // Focus durumuna göre ikon değişiyor
             ),
           }}
@@ -81,7 +88,7 @@ const Tabrouter = () => {
               <Icon
                 name={focused ? 'person' : 'person-outline'}
                 color={color}
-                size={size}
+                size={27}
               /> // Focus durumuna göre ikon değişiyor
             ),
           }}
@@ -95,7 +102,6 @@ export default Tabrouter;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, // Tüm ekranı kaplayacak şekilde ayarlanmalı
-    backgroundColor: 'white', // Eğer yukarı kayıyorsa arka plan rengi belirgin olsun
+    flex: 1,
   },
 });
