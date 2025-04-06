@@ -4,4 +4,5 @@ export const COLORS = {
   tertiary: '#EBEBEB',
   quaternary: '#B2C7FF',
   white: '#F2F2F2',
+  red: '#e91e63',
 };
