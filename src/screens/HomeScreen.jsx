@@ -18,8 +18,11 @@ import Delivery from '../components/badges/Delivery';
 import FreeShipping from '../components/badges/FreeShipping';
 import Discount from '../components/badges/Discount';
 import {fetchCategories} from '../store/slice/categoriesSlice';
+import {useNavigation} from '@react-navigation/native';
+import {ROUTES} from '../navigation/routes';
 
 const HomeScreen = () => {
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const {products, pending, error} = useSelector(state => state.products);
   const {
@@ -49,6 +52,7 @@ const HomeScreen = () => {
     <SafeAreaView style={defaultScreenStyle.safeAreaContainer}>
       <View>
         <View style={defaultScreenStyle.container}>
+          <Text style={styles.visitHeader}>Categories</Text>
           <FlatList
             horizontal
             data={categories}
@@ -75,7 +79,8 @@ const HomeScreen = () => {
             keyExtractor={item => item.id.toString()}
             data={products.slice(0, 10)}
             renderItem={({item}) => (
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate(ROUTES.PRODUCTS)}>
                 <View style={styles.productContainer}>
                   <View style={styles.productImageContainer}>
                     <Image
@@ -114,11 +119,11 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   visitHeader: {
-    marginTop: 20,
+    marginTop: 15,
     color: COLORS.secondary,
     fontSize: 22,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 5,
   },
   image: {
     height: 200,
@@ -193,5 +198,4 @@ const styles = StyleSheet.create({
   categoriesText: {
     fontSize: 18,
   },
-  categoriesContainer: {},
 });

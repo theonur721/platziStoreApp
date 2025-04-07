@@ -5,4 +5,6 @@ export const ROUTES = {
   FAVORITE: 'Favorite',
   PROFILE: 'Profile',
   TAB: 'Tab',
+  PRODUCTS: 'Products',
+  PRODUCTDETAIL: 'Product',
 };
