@@ -8,7 +8,6 @@ import FavoriteScreen from '../screens/FavoriteScreen';
 import {View, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {COLORS} from '../theme/colors';
-import {height, width} from '../constants/dimensions'; // Burada import ettiğiniz constants
 
 const Tab = createBottomTabNavigator();
 
@@ -20,7 +19,7 @@ const Tabrouter = () => {
           headerShown: false,
           tabBarStyle: {
             backgroundColor: COLORS.secondary,
-            height: height * 0.1,
+            height: 80,
             paddingTop: 5,
           },
           tabBarActiveTintColor: COLORS.primary,
@@ -37,7 +36,7 @@ const Tabrouter = () => {
               <Icon
                 name={focused ? 'home' : 'home-outline'}
                 color={color}
-                size={width * 0.07}
+                size={30}
               />
             ),
           }}
@@ -50,7 +49,7 @@ const Tabrouter = () => {
               <Icon
                 name={focused ? 'search-circle' : 'search'}
                 color={color}
-                size={width * 0.07}
+                size={30}
               />
             ),
           }}
@@ -63,7 +62,7 @@ const Tabrouter = () => {
               <Icon
                 name={focused ? 'heart' : 'heart-outline'}
                 color={color}
-                size={width * 0.07}
+                size={30}
               />
             ),
           }}
@@ -76,7 +75,7 @@ const Tabrouter = () => {
               <Icon
                 name={focused ? 'cart' : 'cart-outline'}
                 color={color}
-                size={width * 0.07}
+                size={30}
               />
             ),
           }}
@@ -89,7 +88,7 @@ const Tabrouter = () => {
               <Icon
                 name={focused ? 'person' : 'person-outline'}
                 color={color}
-                size={width * 0.07}
+                size={30}
               />
             ),
           }}

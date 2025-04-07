@@ -16,11 +16,18 @@ import {getRandomImageIndex} from '../utils/getRandomImageIndex';
 import {COLORS} from '../theme/colors';
 import Delivery from '../components/badges/Delivery';
 import FreeShipping from '../components/badges/FreeShipping';
-import Discount from '../components/badges/discount';
+import Discount from '../components/badges/Discount';
+import {fetchCategories} from '../store/slice/categoriesSlice';
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
   const {products, pending, error} = useSelector(state => state.products);
+  const {
+    categories,
+    pending: categoriesLoading,
+    error: categoriesError,
+  } = useSelector(state => state.categories);
+  console.log('Fetched products:', categories);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -35,11 +42,25 @@ const HomeScreen = () => {
     };
 
     fetchProducts();
+    dispatch(fetchCategories());
   }, []);
 
   return (
     <SafeAreaView style={defaultScreenStyle.safeAreaContainer}>
       <View>
+        <View style={defaultScreenStyle.container}>
+          <FlatList
+            horizontal
+            data={categories}
+            renderItem={({item}) => (
+              <TouchableOpacity>
+                <View style={styles.categoriesView}>
+                  <Text style={styles.categoriesText}>{item.name}</Text>
+                </View>
+              </TouchableOpacity>
+            )}
+          />
+        </View>
         <TouchableOpacity>
           <Image
             source={require('../assets/picture-2.jpg')}
@@ -49,35 +70,38 @@ const HomeScreen = () => {
         <View style={defaultScreenStyle.container}>
           <Text style={styles.visitHeader}>All Products</Text>
           <FlatList
+            showsHorizontalScrollIndicator={false}
             horizontal
             keyExtractor={item => item.id.toString()}
             data={products.slice(0, 10)}
             renderItem={({item}) => (
-              <View style={styles.productContainer}>
-                <View style={styles.productImageContainer}>
-                  <Image
-                    source={{uri: item?.images[getRandomImageIndex()]}}
-                    style={styles.productImage}
-                  />
-                </View>
-                <View style={styles.productDetails}>
-                  {/* Ürün başlığını 2 satır ile sınırlıyoruz */}
-                  <Text numberOfLines={2} style={styles.productTitle}>
-                    {item?.title}
-                  </Text>
-                  <Text style={styles.productCategory}>
-                    {item?.category?.name}
-                  </Text>
-                  <Text style={styles.productPrice}>
-                    {item?.price} {''} $
-                  </Text>
-                  <View style={styles.free}>
-                    <FreeShipping />
-                    <Delivery />
-                    <Discount />
+              <TouchableOpacity>
+                <View style={styles.productContainer}>
+                  <View style={styles.productImageContainer}>
+                    <Image
+                      source={{uri: item?.images[getRandomImageIndex()]}}
+                      style={styles.productImage}
+                    />
+                  </View>
+                  <View style={styles.productDetails}>
+                    {/* Ürün başlığını 2 satır ile sınırlıyoruz */}
+                    <Text numberOfLines={2} style={styles.productTitle}>
+                      {item?.title}
+                    </Text>
+                    <Text style={styles.productCategory}>
+                      {item?.category?.name}
+                    </Text>
+                    <Text style={styles.productPrice}>
+                      {item?.price} {''} $
+                    </Text>
+                    <View style={styles.free}>
+                      <FreeShipping />
+                      <Delivery />
+                      <Discount />
+                    </View>
                   </View>
                 </View>
-              </View>
+              </TouchableOpacity>
             )}
           />
         </View>
@@ -90,10 +114,11 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   visitHeader: {
+    marginTop: 20,
     color: COLORS.secondary,
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: 'bold',
-    marginBottom: 5,
+    marginBottom: 10,
   },
   image: {
     height: 200,
@@ -131,7 +156,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5, // Üstten ve alttan boşluk bırakıyoruz
   },
   productTitle: {
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 5,
     textAlign: 'center',
@@ -157,4 +182,16 @@ const styles = StyleSheet.create({
     width: '100%',
     gap: 10,
   },
+  categoriesView: {
+    marginTop: 10,
+    marginBottom: 30,
+    margin: 10,
+    borderWidth: 1,
+    padding: 10,
+    borderRadius: 20,
+  },
+  categoriesText: {
+    fontSize: 18,
+  },
+  categoriesContainer: {},
 });

@@ -9,7 +9,12 @@ const getProduct = () => {
   return verbs.get(URLS.singleProduct);
 };
 
+const getCategories = () => {
+  return verbs.get(URLS.categories);
+};
+
 export default {
   getAllProducts,
   getProduct,
+  getCategories,
 };
