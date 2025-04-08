@@ -15,6 +15,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import FreeShipping from '../../components/badges/FreeShipping';
 import Delivery from '../../components/badges/Delivery';
 import Discount from '../../components/badges/Discount';
+import AddToCart from '../../components/AddToCart';
+import {ROUTES} from '../../navigation/routes';
 
 const ProductDetail = () => {
   const route = useRoute();
@@ -24,13 +26,21 @@ const ProductDetail = () => {
   return (
     <SafeAreaView style={defaultScreenStyle.safeAreaContainer}>
       <ScrollView style={defaultScreenStyle.container}>
-        <Icon
-          name="arrow-back"
-          size={30}
-          color={COLORS.secondary}
-          onPress={() => navigation.goBack()}
-          style={{marginBottom: 20}}
-        />
+        <View style={styles.iconContainer}>
+          <Icon
+            name="arrow-back"
+            size={30}
+            color={COLORS.secondary}
+            onPress={() => navigation.goBack()}
+            style={{marginBottom: 20}}
+          />
+          <Icon
+            name="home"
+            color={COLORS.secondary}
+            size={30}
+            onPress={() => navigation.navigate(ROUTES.HOME)}
+          />
+        </View>
 
         <View style={{position: 'relative'}}>
           <Image
@@ -61,6 +71,9 @@ const ProductDetail = () => {
         <Text style={styles.descriptionTitle}>Description</Text>
         <Text style={styles.description}>{product?.description}</Text>
       </ScrollView>
+      <View style={styles.buttonContainer}>
+        <AddToCart title={'Add to Cart'} />
+      </View>
     </SafeAreaView>
   );
 };
@@ -122,5 +135,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 22,
     color: '#333',
+  },
+  buttonContainer: {
+    position: 'absolute',
+    left: 20,
+    right: 20,
+    bottom: 80,
+  },
+  iconContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });
