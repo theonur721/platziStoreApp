@@ -18,7 +18,7 @@ import {ROUTES} from '../../navigation/routes';
 
 const AllProductsScreen = () => {
   const navigation = useNavigation();
-  const {products} = useSelector(state => state.products); // ✅ Ürünleri store’dan çekiyoruz
+  const {products} = useSelector(state => state.products);
 
   return (
     <SafeAreaView style={defaultScreenStyle.safeAreaContainer}>
