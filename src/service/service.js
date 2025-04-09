@@ -13,8 +13,13 @@ const getCategories = () => {
   return verbs.get(URLS.categories);
 };
 
+const searchProductByTitle = title => {
+  return verbs.get(URLS.searchProduct(title));
+};
+
 export default {
   getAllProducts,
   getProduct,
   getCategories,
+  searchProductByTitle,
 };

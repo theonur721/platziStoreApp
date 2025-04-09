@@ -9,9 +9,7 @@ import {
 import React, {useEffect} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {defaultScreenStyle} from '../styles/defaultScreenStyle';
-import service from '../service/service';
 import {useDispatch, useSelector} from 'react-redux';
-import {setProducts, setLoading, setError} from '../store/slice/productsSlice';
 import {getRandomImageIndex} from '../utils/getRandomImageIndex';
 import {COLORS} from '../theme/colors';
 import Delivery from '../components/badges/Delivery';
@@ -20,31 +18,24 @@ import Discount from '../components/badges/Discount';
 import {fetchCategories} from '../store/slice/categoriesSlice';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTES} from '../navigation/routes';
+import normalize from '../constants/normalize'; // ✅ normalize importu
+
+import {fetchProducts} from '../store/slice/productsSlice';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+
   const {products, pending, error} = useSelector(state => state.products);
   const {
     categories,
     pending: categoriesLoading,
     error: categoriesError,
   } = useSelector(state => state.categories);
-  console.log('Fetched products:', categories);
+  console.log(products);
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      dispatch(setLoading());
-      try {
-        const products = await service.getAllProducts();
-        console.log('Fetched products:', products);
-        dispatch(setProducts(products));
-      } catch (error) {
-        dispatch(setError(error.message));
-      }
-    };
-
-    fetchProducts();
+    dispatch(fetchProducts());
     dispatch(fetchCategories());
   }, []);
 
@@ -54,6 +45,7 @@ const HomeScreen = () => {
         <View style={defaultScreenStyle.container}>
           <Text style={styles.visitHeader}>Categories</Text>
           <FlatList
+            showsHorizontalScrollIndicator={false}
             horizontal
             data={categories}
             renderItem={({item}) => (
@@ -89,7 +81,6 @@ const HomeScreen = () => {
                     />
                   </View>
                   <View style={styles.productDetails}>
-                    {/* Ürün başlığını 2 satır ile sınırlıyoruz */}
                     <Text numberOfLines={2} style={styles.productTitle}>
                       {item?.title}
                     </Text>
@@ -119,36 +110,36 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   visitHeader: {
-    marginTop: 15,
+    marginTop: normalize(15),
     color: COLORS.secondary,
-    fontSize: 22,
+    fontSize: normalize(22),
     fontWeight: 'bold',
-    marginBottom: 5,
+    marginBottom: normalize(5),
   },
   image: {
-    height: 200,
+    height: normalize(200),
     width: '100%',
   },
   productContainer: {
     backgroundColor: '#fff',
-    marginRight: 15,
-    borderRadius: 10,
+    marginRight: normalize(15),
+    borderRadius: normalize(10),
     elevation: 5,
-    padding: 10,
+    padding: normalize(10),
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 4},
+    shadowOffset: {width: 0, height: normalize(4)},
     shadowOpacity: 0.1,
-    shadowRadius: 10,
-    width: 160, // Ürün kartlarının genişliğini sabit tutuyoruz
-    height: 360, // Kartın yüksekliğini artırdık
+    shadowRadius: normalize(10),
+    width: normalize(160),
+    height: normalize(360),
   },
   productImageContainer: {
-    height: 150,
-    width: 150,
+    height: normalize(150),
+    width: normalize(150),
     overflow: 'hidden',
-    borderRadius: 10,
-    marginBottom: 10,
-    alignSelf: 'center', // Görseli ortaladık
+    borderRadius: normalize(10),
+    marginBottom: normalize(10),
+    alignSelf: 'center',
   },
   productImage: {
     height: '100%',
@@ -156,28 +147,28 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   productDetails: {
-    flex: 1, // İçeriği dikeyde esnetiyoruz
-    justifyContent: 'space-between', // Başlık, kategori ve fiyatı arasında dengeyi sağlamak için
-    paddingVertical: 5, // Üstten ve alttan boşluk bırakıyoruz
+    flex: 1,
+    justifyContent: 'space-between',
+    paddingVertical: normalize(5),
   },
   productTitle: {
-    fontSize: 16,
+    fontSize: normalize(16),
     fontWeight: 'bold',
-    marginBottom: 5,
+    marginBottom: normalize(5),
     textAlign: 'center',
     color: '#333',
-    width: '100%', // Başlık için genişliği tam olarak ayarladık
+    width: '100%',
   },
   productCategory: {
-    fontSize: 14,
+    fontSize: normalize(14),
     fontWeight: '800',
     color: COLORS.tertiary,
     backgroundColor: COLORS.secondary,
-    marginBottom: 10, // Kategori ile fiyat arasında boşluk bırakıyoruz
+    marginBottom: normalize(10),
     textAlign: 'center',
   },
   productPrice: {
-    fontSize: 18,
+    fontSize: normalize(18),
     fontWeight: 'bold',
     color: COLORS.red,
     textAlign: 'center',
@@ -185,17 +176,17 @@ const styles = StyleSheet.create({
   free: {
     flexDirection: 'row',
     width: '100%',
-    gap: 10,
+    gap: normalize(10),
   },
   categoriesView: {
-    marginTop: 10,
-    marginBottom: 30,
-    margin: 10,
+    marginTop: normalize(10),
+    marginBottom: normalize(20),
+    margin: normalize(10),
     borderWidth: 1,
-    padding: 10,
-    borderRadius: 20,
+    padding: normalize(10),
+    borderRadius: normalize(20),
   },
   categoriesText: {
-    fontSize: 18,
+    fontSize: normalize(18),
   },
 });

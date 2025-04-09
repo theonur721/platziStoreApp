@@ -35,10 +35,10 @@ const ProductDetail = () => {
             style={{marginBottom: 20}}
           />
           <Icon
-            name="home"
+            name="cart"
             color={COLORS.secondary}
             size={30}
-            onPress={() => navigation.navigate(ROUTES.HOME)}
+            onPress={() => navigation.navigate(ROUTES.CART)}
           />
         </View>
 
