@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {defaultScreenStyle} from '../../styles/defaultScreenStyle';
 import {useRoute, useNavigation} from '@react-navigation/native';
@@ -17,11 +17,29 @@ import Delivery from '../../components/badges/Delivery';
 import Discount from '../../components/badges/Discount';
 import AddToCart from '../../components/AddToCart';
 import {ROUTES} from '../../navigation/routes';
+import normalize from '../../constants/normalize';
+import {useDispatch, useSelector} from 'react-redux';
+import {toggleFavorite} from '../../store/slice/favoriteSlice'; // Burada toggleFavorite action'ını import etmelisin.
 
 const ProductDetail = () => {
   const route = useRoute();
   const navigation = useNavigation();
   const {product} = route.params;
+
+  const favorites = useSelector(state => state.favorites);
+  const dispatch = useDispatch();
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  // Favori durumu başlangıçta ürünün favorilerde olup olmadığına göre belirleniyor.
+  useEffect(() => {
+    setIsFavorite(favorites.some(item => item.id === product?.id));
+  }, [favorites, product?.id]);
+
+  const handleFavorite = () => {
+    dispatch(toggleFavorite(product)); // Favoriye ekle/çıkar
+    setIsFavorite(prevState => !prevState); // Favori durumunu değiştir
+    // Burada herhangi bir yönlendirme yapılmıyor, sadece favori işlemi yapılır.
+  };
 
   return (
     <SafeAreaView style={defaultScreenStyle.safeAreaContainer}>
@@ -50,11 +68,13 @@ const ProductDetail = () => {
           />
 
           <TouchableOpacity
-            onPress={() => {
-              console.log('Favorilere eklenecek');
-            }}
+            onPress={handleFavorite} // Favori işlemine tıklandığında handleFavorite çalışacak
             style={styles.favoriteIconContainer}>
-            <Icon name="heart-outline" size={24} color={COLORS.red} />
+            <Icon
+              name={isFavorite ? 'heart' : 'heart-outline'}
+              size={24}
+              color={isFavorite ? COLORS.red : COLORS.gray} // Favori durumu kırmızı ya da gri olacak
+            />
           </TouchableOpacity>
         </View>
 
@@ -83,64 +103,64 @@ export default ProductDetail;
 const styles = StyleSheet.create({
   image: {
     width: '100%',
-    height: 250,
-    borderRadius: 10,
-    marginBottom: 15,
+    height: normalize(250),
+    borderRadius: normalize(10),
+    marginBottom: normalize(15),
   },
   favoriteIconContainer: {
     position: 'absolute',
-    top: 10,
-    right: 10,
+    top: normalize(10),
+    right: normalize(10),
     backgroundColor: '#fff',
-    padding: 8,
-    borderRadius: 20,
-    elevation: 5, // Android için gölge
-    shadowColor: '#000', // iOS için gölge
+    padding: normalize(8),
+    borderRadius: normalize(20),
+    elevation: 5,
+    shadowColor: '#000',
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.3,
     shadowRadius: 4,
     zIndex: 10,
   },
   title: {
-    fontSize: 22,
+    fontSize: normalize(22),
     fontWeight: 'bold',
     color: COLORS.secondary,
-    marginBottom: 5,
+    marginBottom: normalize(5),
   },
   price: {
-    fontSize: 24,
+    fontSize: normalize(24),
     fontWeight: 'bold',
     color: COLORS.red,
-    marginBottom: 10,
+    marginBottom: normalize(10),
   },
   category: {
-    fontSize: 16,
+    fontSize: normalize(16),
     color: COLORS.tertiary,
-    marginBottom: 15,
+    marginBottom: normalize(15),
     backgroundColor: COLORS.secondary,
-    padding: 2,
+    padding: normalize(2),
   },
   badges: {
     flexDirection: 'row',
-    gap: 10,
-    marginBottom: 20,
+    gap: normalize(10),
+    marginBottom: normalize(20),
   },
   descriptionTitle: {
-    fontSize: 18,
+    fontSize: normalize(18),
     fontWeight: 'bold',
-    marginBottom: 5,
+    marginBottom: normalize(5),
     color: COLORS.secondary,
   },
   description: {
-    fontSize: 16,
-    lineHeight: 22,
+    fontSize: normalize(16),
+    lineHeight: normalize(22),
     color: '#333',
   },
   buttonContainer: {
     position: 'absolute',
-    left: 20,
-    right: 20,
-    bottom: 80,
+    left: normalize(20),
+    right: normalize(20),
+    bottom: normalize(80),
   },
   iconContainer: {
     flexDirection: 'row',

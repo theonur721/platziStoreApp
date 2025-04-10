@@ -49,7 +49,8 @@ const HomeScreen = () => {
             horizontal
             data={categories}
             renderItem={({item}) => (
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate(ROUTES.SEARCH)}>
                 <View style={styles.categoriesView}>
                   <Text style={styles.categoriesText}>{item.name}</Text>
                 </View>
@@ -57,7 +58,7 @@ const HomeScreen = () => {
             )}
           />
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate(ROUTES.FAVORITE)}>
           <Image
             source={require('../assets/picture-2.jpg')}
             style={styles.image}
