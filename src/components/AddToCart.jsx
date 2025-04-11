@@ -1,10 +1,11 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {COLORS} from '../theme/colors';
+import normalize from '../constants/normalize';
 
 const AddToCart = ({...props}) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={props.onPress}>
       <View style={styles.container}>
         <Text style={styles.text}>{props.title}</Text>
       </View>
@@ -17,12 +18,13 @@ export default AddToCart;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: COLORS.quaternary,
-    padding: 15,
-    borderRadius: 20,
+    padding: normalize(15),
+    borderRadius: normalize(20),
     alignItems: 'center',
+    minWidth: '50%',
   },
   text: {
-    fontSize: 22,
+    fontSize: normalize(22),
     fontWeight: 'bold',
   },
 });

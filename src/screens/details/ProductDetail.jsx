@@ -20,6 +20,7 @@ import {ROUTES} from '../../navigation/routes';
 import normalize from '../../constants/normalize';
 import {useDispatch, useSelector} from 'react-redux';
 import {toggleFavorite} from '../../store/slice/favoriteSlice'; // Burada toggleFavorite action'ını import etmelisin.
+import {addToCart} from '../../store/slice/cartSlice';
 
 const ProductDetail = () => {
   const route = useRoute();
@@ -29,6 +30,11 @@ const ProductDetail = () => {
   const favorites = useSelector(state => state.favorites);
   const dispatch = useDispatch();
   const [isFavorite, setIsFavorite] = useState(false);
+
+  //karta ekle fonksiyonu
+  const handleAddToCart = () => {
+    dispatch(addToCart(product));
+  };
 
   // Favori durumu başlangıçta ürünün favorilerde olup olmadığına göre belirleniyor.
   useEffect(() => {
@@ -92,7 +98,7 @@ const ProductDetail = () => {
         <Text style={styles.description}>{product?.description}</Text>
       </ScrollView>
       <View style={styles.buttonContainer}>
-        <AddToCart title={'Add to Cart'} />
+        <AddToCart title={'Add to Cart'} onPress={handleAddToCart} />
       </View>
     </SafeAreaView>
   );
