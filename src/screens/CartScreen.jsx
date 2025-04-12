@@ -34,40 +34,49 @@ const CartScreen = () => {
     <SafeAreaView style={defaultScreenStyle.safeAreaContainer}>
       <View style={[defaultScreenStyle.container, styles.container]}>
         <Text style={styles.title}>CartScreen</Text>
-        <FlatList
-          keyExtractor={item => item.id.toString()}
-          data={cartItems}
-          renderItem={({item}) => (
-            <View style={styles.item}>
-              <View style={styles.itemInfo}>
-                {/* Ürün Resmi */}
-                <Image
-                  source={{uri: item?.images[0]}} // Ürün resmini kullanıyoruz
-                  style={styles.image}
-                  resizeMode="cover"
-                />
+        {totalPrice > 0 ? (
+          <FlatList
+            keyExtractor={item => item.id.toString()}
+            data={cartItems}
+            renderItem={({item}) => (
+              <View style={styles.item}>
+                <View style={styles.itemInfo}>
+                  {/* Ürün Resmi */}
+                  <Image
+                    source={{uri: item?.images[0]}} // Ürün resmini kullanıyoruz
+                    style={styles.image}
+                    resizeMode="cover"
+                  />
 
-                <View style={styles.itemText}>
-                  <Text style={styles.name}>{item.title}</Text>
-                  <Text style={styles.quantity}>Quantity: {item.quantity}</Text>
-                  <Text style={styles.price}>{item.price} $</Text>
+                  <View style={styles.itemText}>
+                    <Text style={styles.name}>{item.title}</Text>
+                    <Text style={styles.quantity}>
+                      Quantity: {item.quantity}
+                    </Text>
+                    <Text style={styles.price}>{item.price} $</Text>
+                  </View>
                 </View>
-              </View>
 
-              <TouchableOpacity
-                onPress={() => handleRemove(item.id)}
-                style={styles.removeButton}>
-                <Icon name="trash" size={normalize(24)} color={COLORS.red} />
-              </TouchableOpacity>
-            </View>
-          )}
-        />
-        <View style={styles.buttonContainer}>
-          <Text style={styles.totalPrice}>
-            <Text style={styles.total}>total:</Text> {totalPrice} $
-          </Text>
-          <AddToCart title={'Confirm Cart'} />
-        </View>
+                <TouchableOpacity
+                  onPress={() => handleRemove(item.id)}
+                  style={styles.removeButton}>
+                  <Icon name="trash" size={normalize(24)} color={COLORS.red} />
+                </TouchableOpacity>
+              </View>
+            )}
+          />
+        ) : (
+          <Text style={styles.emptyCart}>Your cart is empty</Text> // Sepet boşsa mesaj
+        )}
+
+        {totalPrice > 0 && (
+          <View style={styles.buttonContainer}>
+            <Text style={styles.totalPrice}>
+              <Text style={styles.total}>total:</Text> {totalPrice} $
+            </Text>
+            <AddToCart title={'Confirm Cart'} />
+          </View>
+        )}
       </View>
     </SafeAreaView>
   );
@@ -145,5 +154,11 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     borderTopWidth: 1,
     borderColor: '#ccc',
+  },
+  emptyCart: {
+    fontSize: normalize(18),
+    color: COLORS.secondary,
+    textAlign: 'center',
+    marginTop: normalize(30),
   },
 });

@@ -6,6 +6,7 @@ const URLS = {
   singleProduct: id => `v1/products/4${id}`, // tek ürün
   categories: 'v1/categories',
   searchProduct: 'products/?title=', // searchProduct API'yi düzgün şekilde güncelledik
+  categoryProducts: id => `v1/categories/${id}/products`, // kategoriye ürün al
 };
 
 export default URLS;
