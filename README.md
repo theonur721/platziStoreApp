@@ -7,9 +7,10 @@
 - **Redux Toolkit** - Global state yönetimi için.
 - **Formik** - Form işlemleri için.
 
-###
+### Icon importu
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 <Icon name="rocket" size={30} color="#900" />;
+
 # platziStoreApp
