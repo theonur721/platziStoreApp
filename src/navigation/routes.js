@@ -7,4 +7,5 @@ export const ROUTES = {
   TAB: 'Tab',
   PRODUCTS: 'Products',
   PRODUCTDETAIL: 'Product',
+  LOGIN: 'Login',
 };
