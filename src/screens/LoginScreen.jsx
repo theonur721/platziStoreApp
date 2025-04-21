@@ -5,16 +5,58 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Alert,
 } from 'react-native';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {useDispatch, useSelector} from 'react-redux';
+import {loginUser, getUserProfile} from '../store/slice/authSlice';
+import {useNavigation} from '@react-navigation/native';
 import {defaultScreenStyle} from '../styles/defaultScreenStyle';
 import {COLORS} from '../theme/colors';
 import {ROUTES} from '../navigation/routes';
-import {useNavigation} from '@react-navigation/native';
+import normalize from '../constants/normalize';
 
 const LoginScreen = () => {
+  const [email, setEmail] = useState('john@mail.com'); // Default email
+  const [password, setPassword] = useState('changeme'); // Default password
+  const [errorMessage, setErrorMessage] = useState(''); // Hata mesajı için state
+  const dispatch = useDispatch();
   const navigation = useNavigation();
+
+  const {accessToken, user, error, loading} = useSelector(state => state.auth);
+
+  const handleLogin = async () => {
+    if (!email || !password) {
+      Alert.alert('Error', 'Please enter both email and password');
+      return;
+    }
+
+    // Hata mesajını temizle
+    setErrorMessage('');
+
+    const result = await dispatch(loginUser({email, password}));
+
+    if (result.meta.requestStatus === 'fulfilled') {
+      dispatch(getUserProfile()); // Kullanıcıyı al
+    } else {
+      // Hata durumunda error mesajını göster
+      setErrorMessage('Incorrect email or password');
+    }
+  };
+
+  useEffect(() => {
+    if (user) {
+      navigation.navigate(ROUTES.TAB); // Giriş başarılıysa yönlendirme
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (accessToken) {
+      navigation.navigate(ROUTES.TAB); // Token varsa, kullanıcıyı yönlendir
+    }
+  }, [accessToken]);
+
   return (
     <SafeAreaView
       style={[
@@ -24,7 +66,6 @@ const LoginScreen = () => {
       <View style={styles.container}>
         <Text style={styles.title}>Welcome my app!</Text>
 
-        {/* Üst görsel */}
         <View style={styles.imageContainer}>
           <Image
             style={styles.image}
@@ -32,30 +73,37 @@ const LoginScreen = () => {
           />
         </View>
 
-        {/* Inputlar */}
-        <View style={styles.inputGroup}>
-          <TextInput
-            placeholder="Email"
-            placeholderTextColor="#999"
-            style={styles.input}
-          />
-          <TextInput
-            placeholder="Password"
-            placeholderTextColor="#999"
-            secureTextEntry
-            style={styles.input}
-          />
-        </View>
+        {/* Email ve Password Input */}
+        <TextInput
+          placeholder="Email"
+          placeholderTextColor="#ccc"
+          style={styles.input}
+          value={email}
+          onChangeText={setEmail}
+          autoCapitalize="none"
+          keyboardType="email-address"
+        />
+        <TextInput
+          placeholder="Password"
+          placeholderTextColor="#ccc"
+          style={styles.input}
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+        />
 
-        {/* Butonlar */}
+        {errorMessage ? (
+          <Text style={styles.errorText}>{errorMessage}</Text> // Hata mesajı
+        ) : null}
+
         <View style={styles.buttonGroup}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate(ROUTES.TAB)}
-            style={styles.button}>
-            <Text style={styles.buttonText}>Login</Text>
+          <TouchableOpacity style={styles.button} onPress={handleLogin}>
+            <Text style={styles.buttonText}>
+              {loading ? 'Loading...' : 'Login'}
+            </Text>
           </TouchableOpacity>
 
-          <Text style={styles.noAccountText}>Don't have an account?</Text>
+          <Text style={styles.accountText}>Don’t have an account?</Text>
 
           <TouchableOpacity style={styles.buttonOutline}>
             <Text style={[styles.buttonText, {color: 'black'}]}>Register</Text>
@@ -71,73 +119,72 @@ export default LoginScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 24,
+    paddingHorizontal: normalize(24),
     justifyContent: 'center',
     alignItems: 'center',
   },
   title: {
-    fontSize: 30,
+    fontSize: normalize(30),
     fontWeight: 'bold',
     color: COLORS.secondary,
-    marginBottom: 30,
+    marginBottom: normalize(40),
   },
   imageContainer: {
-    marginBottom: 20,
+    marginBottom: normalize(30),
     alignItems: 'center',
   },
   image: {
-    width: 240,
-    height: 170,
+    width: normalize(240),
+    height: normalize(170),
     resizeMode: 'contain',
-    borderRadius: 3500,
-  },
-  inputGroup: {
-    width: '100%',
-    marginBottom: 20,
+    borderRadius: normalize(3500),
   },
   input: {
+    width: '85%',
     backgroundColor: '#fff',
-    padding: 14,
-    borderRadius: 12,
-    marginBottom: 12,
-    fontSize: 16,
-    color: '#000',
+    padding: normalize(14),
+    borderRadius: normalize(14),
+    marginVertical: normalize(8),
+    fontSize: normalize(16),
   },
   buttonGroup: {
+    marginTop: normalize(20),
     width: '100%',
     alignItems: 'center',
   },
   button: {
     backgroundColor: COLORS.secondary,
-    paddingVertical: 14,
-    borderRadius: 30,
-    marginVertical: 10,
+    paddingVertical: normalize(14),
+    borderRadius: normalize(30),
+    marginVertical: normalize(10),
     width: '80%',
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
     elevation: 4,
   },
   buttonOutline: {
     backgroundColor: COLORS.tertiary,
-    paddingVertical: 14,
-    borderRadius: 30,
-    marginTop: 10,
+    paddingVertical: normalize(14),
+    borderRadius: normalize(30),
+    marginVertical: normalize(10),
     width: '80%',
     alignItems: 'center',
     elevation: 4,
     borderWidth: 1,
   },
   buttonText: {
-    fontSize: 18,
-    fontWeight: '600',
     color: COLORS.white,
+    fontSize: normalize(18),
+    fontWeight: '600',
   },
-  noAccountText: {
-    marginTop: 15,
-    fontSize: 14,
+  accountText: {
+    marginTop: normalize(10),
     color: COLORS.secondary,
+    fontSize: normalize(14),
+  },
+  errorText: {
+    color: 'red',
+    marginTop: normalize(10),
+    fontSize: normalize(16),
+    fontWeight: '500',
   },
 });

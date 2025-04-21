@@ -1,3 +1,4 @@
+import React, {useState} from 'react';
 import {
   FlatList,
   Image,
@@ -6,29 +7,43 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {defaultScreenStyle} from '../styles/defaultScreenStyle';
-import {removeFromCart} from '../store/slice/cartSlice';
+import {removeFromCart, clearCart} from '../store/slice/cartSlice';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {COLORS} from '../theme/colors';
 import AddToCart from '../components/AddToCart';
 import normalize from '../constants/normalize';
+import CustomNotification from '../components/CustomNotification'; // Yeni import
 
 const CartScreen = () => {
   const cartItems = useSelector(state => state.cart.cartItems);
-
-  // Ürünü sepetten sil
   const dispatch = useDispatch();
+
+  const [showNotification, setShowNotification] = useState(false); // Bildirim durumunu kontrol etmek için bir state
+
+  // Ürünü sepetten silme işlemi
   const handleRemove = productID => {
     dispatch(removeFromCart(productID));
   };
 
   // Sepetteki toplam fiyatı hesapla
   const totalPrice = cartItems.reduce((total, item) => {
-    return total + item.price * item.quantity; // Her ürünün fiyatı ile miktarını çarp
+    return total + item.price * item.quantity; // Ürün fiyatı ile miktarını çarpıyoruz
   }, 0);
+
+  // Sepeti temizleme ve bildirim gösterme
+  const handleConfirmCart = () => {
+    // Sepet onaylandığında bildirim göster
+    setShowNotification(true);
+
+    // Bildirimi 3 saniye sonra gizle
+    setTimeout(() => {
+      setShowNotification(false);
+      dispatch(clearCart()); // Sepeti temizle
+    }, 3000);
+  };
 
   return (
     <SafeAreaView style={defaultScreenStyle.safeAreaContainer}>
@@ -41,13 +56,11 @@ const CartScreen = () => {
             renderItem={({item}) => (
               <View style={styles.item}>
                 <View style={styles.itemInfo}>
-                  {/* Ürün Resmi */}
                   <Image
-                    source={{uri: item?.images[0]}} // Ürün resmini kullanıyoruz
+                    source={{uri: item?.images[0]}}
                     style={styles.image}
                     resizeMode="cover"
                   />
-
                   <View style={styles.itemText}>
                     <Text style={styles.name}>{item.title}</Text>
                     <Text style={styles.quantity}>
@@ -66,7 +79,7 @@ const CartScreen = () => {
             )}
           />
         ) : (
-          <Text style={styles.emptyCart}>Your cart is empty</Text> // Sepet boşsa mesaj
+          <Text style={styles.emptyCart}>Your cart is empty</Text>
         )}
 
         {totalPrice > 0 && (
@@ -74,10 +87,18 @@ const CartScreen = () => {
             <Text style={styles.totalPrice}>
               <Text style={styles.total}>total:</Text> {totalPrice} $
             </Text>
-            <AddToCart title={'Confirm Cart'} />
+            <AddToCart title={'Confirm Cart'} onPress={handleConfirmCart} />
           </View>
         )}
       </View>
+
+      {/* Eğer bildirim gösterilecekse CustomNotification bileşenini ekleyelim */}
+      {showNotification && (
+        <CustomNotification
+          message="Your order has been placed successfully!"
+          onClose={() => setShowNotification(false)}
+        />
+      )}
     </SafeAreaView>
   );
 };
@@ -86,8 +107,8 @@ export default CartScreen;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, // Bu, tüm alanın kullanılmasını sağlar
-    paddingBottom: normalize(100), // Alt kısmı biraz boş bırakmak için
+    flex: 1,
+    paddingBottom: normalize(100),
   },
   title: {
     fontSize: normalize(22),
