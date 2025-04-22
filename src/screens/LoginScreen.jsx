@@ -64,7 +64,7 @@ const LoginScreen = () => {
         {backgroundColor: COLORS.primary},
       ]}>
       <View style={styles.container}>
-        <Text style={styles.title}>Welcome my app!</Text>
+        <Text style={styles.title}>Welcome to my app!</Text>
 
         <View style={styles.imageContainer}>
           <Image
