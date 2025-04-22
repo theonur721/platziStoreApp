@@ -6,6 +6,8 @@
 - **Axios** - API istekleri için.
 - **Redux Toolkit** - Global state yönetimi için.
 - **Formik** - Form işlemleri için.
+- **Async Storage** - token saklama için,
+- **Linear Gradient** - renk geçişi için,
 
 ### Icon importu
 
