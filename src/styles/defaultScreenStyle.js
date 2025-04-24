@@ -1,9 +1,10 @@
 import {StyleSheet} from 'react-native';
 import {COLORS} from '../theme/colors';
+import normalize from '../constants/normalize';
 
 const defaultScreenStyle = StyleSheet.create({
   container: {
-    padding: 10,
+    padding: normalize(10),
     backgroundColor: COLORS.white,
   },
   safeAreaContainer: {
