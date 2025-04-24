@@ -55,7 +55,11 @@ Follow these steps to run the project:
    ```
 
 2. **Install Dependencies:**
+   ```bash
    npm install
+   ```
+
+```
 
 3. **Run the App:**
    For Android: npx react-native run-android
@@ -108,3 +112,4 @@ Platzi Store, **React Native** kullanılarak geliştirilmiş bir uygulamadır. K
 ### Responsive Tasarım:
 
 - Normalize kullanılarak tüm ekran boyutlarında düzgün görüntü sağlanır.
+```
