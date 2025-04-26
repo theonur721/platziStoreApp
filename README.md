@@ -61,10 +61,14 @@ Follow these steps to run the project:
    ```
 
 3. **Run the App:**
-
-npx react-native run-android
-
-npx react-native run-ios
+   for Android:
+   ```bash
+   npx react-native run-android
+   ```
+   for IOS:
+   ```bash
+   npx react-native run-ios
+   ```
 
 ## SCREEN GİF
 
