@@ -1,30 +1,25 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import service from '../../service/service';
 
-// Asenkron thunk (Kategoriye göre ürünleri çekme)
 export const fetchProductsByCategory = createAsyncThunk(
   'categoryProducts/fetch',
   async (categoryId, thunkAPI) => {
     try {
-      // API'den ürünleri çekiyoruz
       const data = await service.getProductsByCategory(categoryId);
-      console.log('Gelen Ürünler:', data); // API yanıtını kontrol edelim
-      return data; // Dönüyoruz
+      console.log('Gelen Ürünler:', data);
+      return data;
     } catch (error) {
-      // Hata durumunda hata mesajını döndürüyoruz
       return thunkAPI.rejectWithValue(error.message);
     }
   },
 );
 
-// Başlangıç durumu
 const initialState = {
   products: [],
   pending: false,
   error: null,
 };
 
-// Slice
 const categoryProductsSlice = createSlice({
   name: 'categoryProducts',
   initialState,

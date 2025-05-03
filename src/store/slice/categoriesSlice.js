@@ -1,7 +1,6 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
-import service from '../../service/service'; // getCategories burada
+import service from '../../service/service';
 
-// 🔁 Asenkron thunk (API çağrısı)
 export const fetchCategories = createAsyncThunk(
   'categories/fetchCategories',
   async (_, thunkAPI) => {
@@ -14,18 +13,16 @@ export const fetchCategories = createAsyncThunk(
   },
 );
 
-// 🧠 Başlangıç durumu
 const initialState = {
   categories: [],
   pending: false,
   error: null,
 };
 
-// 🧩 Slice
 const categoriesSlice = createSlice({
   name: 'categories',
   initialState,
-  reducers: {}, // reducers artık boş, çünkü asenkron işler extraReducers ile
+  reducers: {},
   extraReducers: builder => {
     builder
       .addCase(fetchCategories.pending, state => {
@@ -43,5 +40,4 @@ const categoriesSlice = createSlice({
   },
 });
 
-// 🔁 Reducer'ı export ediyoruz
 export default categoriesSlice.reducer;

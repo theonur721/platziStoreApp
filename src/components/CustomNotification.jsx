@@ -26,17 +26,17 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.4)', // Etrafı bulanıklaştırmak için yarı saydam siyah
-    justifyContent: 'center', // Ortalamak için
-    alignItems: 'center', // Ortalamak için
-    zIndex: 1000, // Ön planda görünmesini sağlar
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 1000,
   },
   notificationContainer: {
     backgroundColor: COLORS.green,
     padding: normalize(15),
     borderRadius: normalize(8),
     alignItems: 'center',
-    width: '80%', // Ekranın %80'lik kısmı kadar genişlik
+    width: '80%',
   },
   notificationText: {
     color: COLORS.white,

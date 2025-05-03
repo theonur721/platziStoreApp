@@ -8,7 +8,7 @@ import {COLORS} from '../theme/colors';
 import normalize from '../constants/normalize';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTES} from '../navigation/routes';
-import LinearGradient from 'react-native-linear-gradient'; // Gradient kullanımı
+import LinearGradient from 'react-native-linear-gradient';
 
 const ProfileScreen = () => {
   const {user} = useSelector(state => state.auth);
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     width: '90%',
     borderRadius: normalize(20),
     padding: normalize(20),
-    backgroundColor: 'rgba(0, 0, 0, 0.3)', // Hafif şeffaf arka plan
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
     marginTop: normalize(40),
   },
   title: {
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     borderRadius: normalize(90),
     marginBottom: normalize(20),
     borderWidth: 4,
-    borderColor: COLORS.secondary, // Avatar etrafında kenarlık
+    borderColor: COLORS.secondary,
   },
   label: {
     fontSize: normalize(18),

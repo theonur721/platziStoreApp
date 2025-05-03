@@ -16,7 +16,7 @@ import {useSelector} from 'react-redux';
 import {COLORS} from '../../theme/colors';
 import {getRandomImageIndex} from '../../utils/getRandomImageIndex';
 import {ROUTES} from '../../navigation/routes';
-import normalize from '../../constants/normalize'; // Normalize dosyasını içeri aktar
+import normalize from '../../constants/normalize';
 
 const AllProductsScreen = () => {
   const navigation = useNavigation();
@@ -41,7 +41,7 @@ const AllProductsScreen = () => {
         <Icon
           name={'arrow-back'}
           color={COLORS.secondary}
-          size={normalize(30)} // Normalize edilmiş ikon boyutu
+          size={normalize(30)}
           onPress={() => navigation.goBack()}
         />
       </View>

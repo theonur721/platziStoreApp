@@ -1,7 +1,6 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import service from '../../service/service';
 
-// Arama için fetch işlemi (thunk)
 export const searchProducts = createAsyncThunk(
   'products/searchProducts',
   async (searchTerm, {rejectWithValue}) => {

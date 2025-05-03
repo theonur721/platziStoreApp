@@ -72,6 +72,10 @@ Follow these steps to run the project:
 
 ## SCREEN GİF
 
+![](ekran.gif)
+
+---
+
 # Platzi Store - React Native (Türkçe)
 
 Platzi Store, **React Native** kullanılarak geliştirilmiş bir uygulamadır. Kullanıcılar, ürünleri görüntüleyebilir, sepete ekleyip çıkarabilir ve favorilerine ekleyebilir. JWT tabanlı kimlik doğrulama kullanılarak güvenli giriş/çıkış yapılır.
@@ -116,7 +120,3 @@ Platzi Store, **React Native** kullanılarak geliştirilmiş bir uygulamadır. K
 ### Responsive Tasarım:
 
 - Normalize kullanılarak tüm ekran boyutlarında düzgün görüntü sağlanır.
-
-```
-
-```

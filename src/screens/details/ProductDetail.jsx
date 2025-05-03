@@ -19,7 +19,7 @@ import AddToCart from '../../components/AddToCart';
 import {ROUTES} from '../../navigation/routes';
 import normalize from '../../constants/normalize';
 import {useDispatch, useSelector} from 'react-redux';
-import {toggleFavorite} from '../../store/slice/favoriteSlice'; // Burada toggleFavorite action'ını import etmelisin.
+import {toggleFavorite} from '../../store/slice/favoriteSlice';
 import {addToCart} from '../../store/slice/cartSlice';
 
 const ProductDetail = () => {
@@ -44,7 +44,6 @@ const ProductDetail = () => {
   const handleFavorite = () => {
     dispatch(toggleFavorite(product)); // Favoriye ekle/çıkar
     setIsFavorite(prevState => !prevState); // Favori durumunu değiştir
-    // Burada herhangi bir yönlendirme yapılmıyor, sadece favori işlemi yapılır.
   };
 
   return (
@@ -74,12 +73,12 @@ const ProductDetail = () => {
           />
 
           <TouchableOpacity
-            onPress={handleFavorite} // Favori işlemine tıklandığında handleFavorite çalışacak
+            onPress={handleFavorite}
             style={styles.favoriteIconContainer}>
             <Icon
               name={isFavorite ? 'heart' : 'heart-outline'}
               size={24}
-              color={isFavorite ? COLORS.red : COLORS.gray} // Favori durumu kırmızı ya da gri olacak
+              color={isFavorite ? COLORS.red : COLORS.gray}
             />
           </TouchableOpacity>
         </View>

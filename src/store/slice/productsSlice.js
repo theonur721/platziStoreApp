@@ -1,8 +1,7 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
-import service from '../../service/service'; // servisin doğru yolu
-import {searchProducts} from '../actions/searchProductActions'; // Arama eylemi burada
+import service from '../../service/service';
+import {searchProducts} from '../actions/searchProductActions';
 
-// Tüm ürünleri çekme işlemi (fetchProducts)
 export const fetchProducts = createAsyncThunk(
   'products/fetchProducts', // Redux action tipi
   async (_, {rejectWithValue}) => {
@@ -15,7 +14,6 @@ export const fetchProducts = createAsyncThunk(
   },
 );
 
-// Başlangıç state
 const initialState = {
   products: [],
   searchedProducts: [],
@@ -23,7 +21,6 @@ const initialState = {
   error: null,
 };
 
-// Slice
 const productsSlice = createSlice({
   name: 'products',
   initialState,

@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {COLORS} from '../../theme/colors';
-import normalize from '../../constants/normalize'; // düzeltildi: normalize default değil named export
+import normalize from '../../constants/normalize';
 
 const Delivery = () => {
   return (
@@ -18,12 +18,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#F5F9F7',
-    width: normalize(100), // %30 yerine yaklaşık genişlik değeri
+    width: normalize(100),
     padding: normalize(6),
   },
   text: {
     fontSize: normalize(12),
-    fontWeight: '600', // semibold yerine numeric
+    fontWeight: '600',
     marginTop: normalize(5),
   },
 });

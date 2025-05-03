@@ -15,7 +15,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {COLORS} from '../theme/colors';
 import AddToCart from '../components/AddToCart';
 import normalize from '../constants/normalize';
-import CustomNotification from '../components/CustomNotification'; // Yeni import
+import CustomNotification from '../components/CustomNotification';
 
 const CartScreen = () => {
   const cartItems = useSelector(state => state.cart.cartItems);
@@ -92,7 +92,6 @@ const CartScreen = () => {
         )}
       </View>
 
-      {/* Eğer bildirim gösterilecekse CustomNotification bileşenini ekleyelim */}
       {showNotification && (
         <CustomNotification
           message="Your order has been placed successfully!"

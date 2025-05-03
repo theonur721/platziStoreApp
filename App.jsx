@@ -21,6 +21,6 @@ export default App;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, // Tüm ekranı kaplamasını sağlıyoruz
+    flex: 1,
   },
 });
